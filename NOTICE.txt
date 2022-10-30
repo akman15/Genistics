@@ -1,0 +1,10 @@
+Genistics: Java genetic algorithm statistics tester.
+Copyright (c) 2022 Sotiris Manios
+
+===============================================================================
+Jenetics
+Copyright (c) 2007-2017 Franz Wilhelmstötter
+
+This product includes software developed by
+Jenetics  (https://jenetics.io/).
+===============================================================================
