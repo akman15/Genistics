@@ -29,7 +29,7 @@ import javax.swing.JTextArea;
  */
 public class RastriginIsland {
     private final static double A=10,R=5.12;
-    private final static int N=2;
+    private final static int N=20;
     private static final InvertibleCodec<double[],DoubleGene > CODEC = Codecs.ofVector(DoubleRange.of(-R,R),N);
     static Genographer gngphr;
     static StatGrapher stats;
@@ -126,7 +126,7 @@ public class RastriginIsland {
                         +"\nMutation Probability:"+(int)settings[i].mutationprobability+" Crossover probability:"+(int)settings[i].crossoverprobability+" Crossover Point:"+settings[i].crossoverpoint;
             }
             gngphr.Writeln(output);
-            stats.Writeln(cycle+","+island.getgen()+","+island.getBestPhenotype().fitness());
+            stats.Writeln(cycle,island.getgen(),island.getBestPhenotype().fitness());
         }while(limit.getMaxCycles()>cycle);
         
         gngphr.finish();
@@ -156,7 +156,7 @@ public class RastriginIsland {
             IslandMenu dialog = new IslandMenu(f,true);
             settings[i]=dialog.showDialog();
         }
-        
+
         JTextArea l = new JTextArea(RastriginIsland.main(limit,ArSet));
         d.add(l);
         f.add(d);
