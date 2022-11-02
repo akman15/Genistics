@@ -134,7 +134,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("Limit generation by: Min");
+        jLabel8.setText("Gneration limit: Min");
 
         jLabel9.setText("Max");
 
@@ -159,7 +159,7 @@ public class MainMenu extends javax.swing.JFrame {
         LimitsPanelLayout.setHorizontalGroup(
             LimitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LimitsPanelLayout.createSequentialGroup()
-                .addContainerGap(441, Short.MAX_VALUE)
+                .addContainerGap(465, Short.MAX_VALUE)
                 .addGroup(LimitsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LimitsPanelLayout.createSequentialGroup()
                         .addComponent(jLabel8)

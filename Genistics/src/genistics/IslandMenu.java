@@ -13,6 +13,7 @@ public class IslandMenu extends javax.swing.JDialog {
     Simsettings settings;
     public IslandMenu(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        this.setUndecorated(true);
         initComponents();
     }
     /**
@@ -28,15 +29,14 @@ public class IslandMenu extends javax.swing.JDialog {
         jComboBoxSelector = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
         NextButton = new javax.swing.JButton();
-        PopSlider = new javax.swing.JSlider();
         jLabel2 = new javax.swing.JLabel();
-        PopLabel = new javax.swing.JLabel();
         MutationSpinner = new javax.swing.JSpinner();
         jLabel3 = new javax.swing.JLabel();
         CrossoverSpinner = new javax.swing.JSpinner();
         jLabel4 = new javax.swing.JLabel();
         jComboBoxCrossover = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
+        Popspinner = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -60,45 +60,47 @@ public class IslandMenu extends javax.swing.JDialog {
             }
         });
 
-        PopSlider.setMajorTickSpacing(100);
-        PopSlider.setMaximum(1000);
-        PopSlider.setMinimum(100);
-        PopSlider.setMinorTickSpacing(50);
-        PopSlider.setPaintLabels(true);
-        PopSlider.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                PopSliderStateChanged(evt);
-            }
-        });
-
         jLabel2.setText("Population");
-
-        PopLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        PopLabel.setText("100");
 
         MutationSpinner.setModel(new javax.swing.SpinnerNumberModel(10, 0, 100, 1));
         MutationSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MutationSpinner.setName(""); // NOI18N
 
-        jLabel3.setText("Mutation Chance %");
+        jLabel3.setText("Mutation Rate %");
 
         CrossoverSpinner.setModel(new javax.swing.SpinnerNumberModel(10, 0, 100, 1));
         CrossoverSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         CrossoverSpinner.setName(""); // NOI18N
 
-        jLabel4.setText("Crossover Chance %");
+        jLabel4.setText("Crossover Propability %");
 
         jComboBoxCrossover.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "n" }));
 
         jLabel5.setText("Crossover Points");
+
+        Popspinner.setModel(new javax.swing.SpinnerNumberModel(20, 2, 1000, 1));
+        Popspinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        Popspinner.setName(""); // NOI18N
 
         javax.swing.GroupLayout SingleLayout = new javax.swing.GroupLayout(Single);
         Single.setLayout(SingleLayout);
         SingleLayout.setHorizontalGroup(
             SingleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(SingleLayout.createSequentialGroup()
-                .addContainerGap(439, Short.MAX_VALUE)
+                .addContainerGap(514, Short.MAX_VALUE)
                 .addGroup(SingleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SingleLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CrossoverSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(MutationSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SingleLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Popspinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SingleLayout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -107,22 +109,6 @@ public class IslandMenu extends javax.swing.JDialog {
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SingleLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(SingleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(SingleLayout.createSequentialGroup()
-                                .addComponent(PopSlider, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(PopLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(SingleLayout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(CrossoverSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(MutationSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addComponent(NextButton, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
@@ -136,10 +122,9 @@ public class IslandMenu extends javax.swing.JDialog {
                     .addComponent(jComboBoxCrossover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(15, 15, 15)
-                .addGroup(SingleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(PopSlider, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                    .addComponent(PopLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(SingleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Popspinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(SingleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -156,7 +141,7 @@ public class IslandMenu extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 881, Short.MAX_VALUE)
+            .addGap(0, 898, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -181,13 +166,9 @@ public class IslandMenu extends javax.swing.JDialog {
         setVisible(false);
         dispose();
     }//GEN-LAST:event_NextButtonActionPerformed
-
-    private void PopSliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_PopSliderStateChanged
-        PopLabel.setText(""+PopSlider.getValue());
-    }//GEN-LAST:event_PopSliderStateChanged
     public void GetSettings(){
         Selectors s = (Selectors) jComboBoxSelector.getSelectedItem();
-        int pop = PopSlider.getValue();
+        int pop = (int)Popspinner.getValue();
         double m = (int)MutationSpinner.getValue();
         double c = (int)CrossoverSpinner.getValue();
         int cp=jComboBoxCrossover.getSelectedIndex()+1;
@@ -243,8 +224,7 @@ public class IslandMenu extends javax.swing.JDialog {
     private javax.swing.JSpinner CrossoverSpinner;
     private javax.swing.JSpinner MutationSpinner;
     private javax.swing.JButton NextButton;
-    private javax.swing.JLabel PopLabel;
-    private javax.swing.JSlider PopSlider;
+    private javax.swing.JSpinner Popspinner;
     private javax.swing.JPanel Single;
     private javax.swing.JComboBox<String> jComboBoxCrossover;
     private javax.swing.JComboBox<Selectors> jComboBoxSelector;
