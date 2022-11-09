@@ -79,8 +79,7 @@ public class Archipelago {//A collection of islands
         }
                 
         if((Math.random()+MigrationProb)>1 && gen.get(IslandInc)>0 && IslandPop>0){ //random chance for transfer between islands
-            Boolean found=false;
-            //gngrphr.Writeln("population 1:"+pop1.toString());
+            /*Boolean found=false;
             for(int i=0;i<pop1.length();i++){//create a new ISeq without the best phenotype
                 if(pop1.get(i)==result.bestPhenotype() && !found){
                   found=true;
@@ -88,7 +87,7 @@ public class Archipelago {//A collection of islands
                     pop2=pop2.append(pop1.get(i));
                 }
             }
-            //gngrphr.Writeln("population 2:"+pop2.toString());
+            */
             if(IslandPop==1){
                 //gngrphr.Writeln("fortransfer to Island "+Inext()+":"+result.bestPhenotype().fitness());
                 GenMail mail = new GenMail(result.bestPhenotype(), Inext() , IslandInc);
@@ -100,7 +99,7 @@ public class Archipelago {//A collection of islands
                 GenMail mail = new GenMail(result.bestPhenotype(), randisland , IslandInc);
                 post.sent(mail);
             }
-            population.set(IslandInc,pop2);//save the new ISeq without the mailed phenotype
+            //population.set(IslandInc,pop2);//save the new ISeq without the mailed phenotype
         }
         
         IncrementI();
