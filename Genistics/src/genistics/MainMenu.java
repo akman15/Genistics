@@ -112,11 +112,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         jSplitPane2.setTopComponent(Archipelago);
 
-        MaxReps.setModel(new javax.swing.SpinnerNumberModel(50, 0, 1000, 1));
+        MaxReps.setModel(new javax.swing.SpinnerNumberModel(500, 0, 1000, 1));
         MaxReps.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MaxReps.setName(""); // NOI18N
 
-        MaxGens.setModel(new javax.swing.SpinnerNumberModel(1000, 1, 1000000, 1));
+        MaxGens.setModel(new javax.swing.SpinnerNumberModel(100000, 1, 1000000, 1));
         MaxGens.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MaxGens.setName(""); // NOI18N
         MaxGens.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -125,7 +125,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        MinGens.setModel(new javax.swing.SpinnerNumberModel(100, 0, 100000, 1));
+        MinGens.setModel(new javax.swing.SpinnerNumberModel(1000, 0, 100000, 1));
         MinGens.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MinGens.setName(""); // NOI18N
         MinGens.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -140,7 +140,7 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel10.setText("Repetitions");
 
-        CGDspinner.setModel(new javax.swing.SpinnerNumberModel(10, 1, 100, 1));
+        CGDspinner.setModel(new javax.swing.SpinnerNumberModel(500, 1, null, 1));
         CGDspinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         CGDspinner.setName(""); // NOI18N
 
@@ -148,11 +148,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel12.setText("Generations");
 
-        MaxCyclesSpinner.setModel(new javax.swing.SpinnerNumberModel(5, 1, 1000, 1));
+        MaxCyclesSpinner.setModel(new javax.swing.SpinnerNumberModel(20, 1, 1000, 1));
         MaxCyclesSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MaxCyclesSpinner.setName(""); // NOI18N
 
-        jLabel13.setText("Max Cycles:");
+        jLabel13.setText("Max Tasks:");
 
         javax.swing.GroupLayout LimitsPanelLayout = new javax.swing.GroupLayout(LimitsPanel);
         LimitsPanel.setLayout(LimitsPanelLayout);
