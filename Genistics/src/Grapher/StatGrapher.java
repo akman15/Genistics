@@ -19,6 +19,7 @@ public class StatGrapher {
     private final PrintWriter writer;
     private ArrayList<Long> genlist= new ArrayList<>();//saves individual generations in a list
     private ArrayList<Double> phenlist= new ArrayList<>();//saves individual phenotypes in a list
+    private boolean initialized=false;
     
     public StatGrapher(String filename) throws FileNotFoundException{
         /**
@@ -34,7 +35,16 @@ public class StatGrapher {
             i++;
         }
         writer = new PrintWriter(file);
-        writer.println("Cycle,Generations,Best Phenotype fitness");
+        String temp1[]=filename.split("-");
+        String temp2[]=temp1[0].split("_");
+        writer.println("Test function:"+temp2[0]+",Island Population:"+temp2[1]+
+        ",Migration chance%:"+temp2[2]);
+        for(i=1;i<temp1.length;i++){
+            temp2=temp1[i].split("_");
+            writer.println("Island:"+i+",Population:"+temp2[0]+",Mutation rate:"+temp2[1]+
+            ",Crossover Propability:"+temp2[2]+",Crossover Points:"+temp2[3]+
+            ",Selector:"+temp2[4]);
+        }
     }
     public void finish(){
         /**
@@ -56,6 +66,10 @@ public class StatGrapher {
         writer.print(s);
     }
     public void Writeln(int cycle,long generations,double bestphenotype){
+        if(initialized==false){
+            initialized=true;
+            writer.println("Cycle,Generations,Best Phenotype fitness");
+        }
         genlist.add(generations);
         phenlist.add(bestphenotype);
         writer.println(cycle+","+generations+","+bestphenotype);
