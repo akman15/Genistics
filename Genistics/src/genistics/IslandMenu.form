@@ -131,9 +131,14 @@
       </Layout>
       <SubComponents>
         <Component class="javax.swing.JComboBox" name="jComboBoxSelector">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="0"/>
+            </Property>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;&gt;()"/>
-            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jComboBoxSelector.addItem(new Selectors(&quot;Tournament&quot;,new TournamentSelector()));&#xa;jComboBoxSelector.addItem(new Selectors(&quot;Roulette Wheel&quot;,new RouletteWheelSelector()));&#xa;jComboBoxSelector.addItem(new Selectors(&quot;Linear&quot;,new LinearRankSelector()));&#xa;jComboBoxSelector.addItem(new Selectors(&quot;Exponential&quot;,new ExponentialRankSelector()));&#xa;jComboBoxSelector.setSelectedIndex(0);"/>
+            <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="jComboBoxSelector.addItem(new Selectors(&quot;Tournament&quot;,new TournamentSelector(20)));&#xa;jComboBoxSelector.addItem(new Selectors(&quot;Roulette Wheel&quot;,new RouletteWheelSelector()));&#xa;jComboBoxSelector.addItem(new Selectors(&quot;Linear&quot;,new LinearRankSelector()));&#xa;jComboBoxSelector.addItem(new Selectors(&quot;Exponential&quot;,new ExponentialRankSelector(0.5)));&#xa;jComboBoxSelector.setSelectedIndex(0);"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Selectors&gt;"/>
           </AuxValues>
         </Component>

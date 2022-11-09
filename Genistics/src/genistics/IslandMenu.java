@@ -45,10 +45,10 @@ public class IslandMenu extends javax.swing.JDialog {
         Single.setMinimumSize(new java.awt.Dimension(10, 100));
         Single.setOpaque(false);
 
-        jComboBoxSelector.addItem(new Selectors("Tournament",new TournamentSelector()));
+        jComboBoxSelector.addItem(new Selectors("Tournament",new TournamentSelector(20)));
         jComboBoxSelector.addItem(new Selectors("Roulette Wheel",new RouletteWheelSelector()));
         jComboBoxSelector.addItem(new Selectors("Linear",new LinearRankSelector()));
-        jComboBoxSelector.addItem(new Selectors("Exponential",new ExponentialRankSelector()));
+        jComboBoxSelector.addItem(new Selectors("Exponential",new ExponentialRankSelector(0.5)));
         jComboBoxSelector.setSelectedIndex(0);
 
         jLabel1.setText("Selector");
