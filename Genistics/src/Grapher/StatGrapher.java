@@ -91,10 +91,11 @@ public class StatGrapher {
         writer.println("Range,"+rangeG+","+rangeP);
     }
     private void StandardDeviation(){
-        double sdG=0,sdP=0,sumP=0,meanG,meanP;
+        double sdG=0.0,sdP=0.0,sumP=0.0,meanG,meanP,resultG,resultP;
         long sumG=0;
         for(long g:genlist){
             sumG+=g;
+            
         }
         for(double p:phenlist){
             sumP+=p;
@@ -107,7 +108,9 @@ public class StatGrapher {
         for(double p:phenlist){
             sdP+= Math.pow(p-meanP, 2);
         }
-        writer.println("Standard Deviation,"+sdG+","+sdP);
+        resultG=Math.sqrt(sdG/genlist.size());
+        resultP=Math.sqrt(sdP/phenlist.size());
+        writer.println("Standard Deviation,"+resultG+","+resultP);
     }
     private void Best(){
         ArrayList<Long> sortedG=new ArrayList<>(genlist);
