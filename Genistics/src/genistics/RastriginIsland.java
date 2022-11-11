@@ -74,8 +74,8 @@ public class RastriginIsland {
                     .populationSize(settings[i].population)
                     .optimize(Optimize.MINIMUM)
                     .alterers(
-                            new Mutator<>((double)settings[i].mutationprobability/100.0),//search mutation meaning
-                            new MultiPointCrossover<>((double)settings[i].crossoverprobability/100.0,settings[i].crossoverpoint)
+                            new Mutator<>(settings[i].mutationprobability/100),//search mutation meaning
+                            new MultiPointCrossover<>(settings[i].crossoverprobability/100,settings[i].crossoverpoint)
                             )
                     .offspringFraction(1)
                     .selector((Selector<DoubleGene, Double>) settings[i].selector.getValue())
