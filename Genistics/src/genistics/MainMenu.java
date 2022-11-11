@@ -249,7 +249,7 @@ public class MainMenu extends javax.swing.JFrame {
 
     private void ArchipelagoRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ArchipelagoRunActionPerformed
         double d=(int)MigrationSpinner.getValue();
-        ArchipelagoSettings ArSet=new ArchipelagoSettings((int)IslandPopSpinner.getValue(), d/100);
+        ArchipelagoSettings ArSet=new ArchipelagoSettings((int)IslandPopSpinner.getValue(), d/100.0);
         GenLimits limit=new GenLimits((int)MaxGens.getValue(), (int)MinGens.getValue(), (int)MaxReps.getValue(),(int)CGDspinner.getValue(),(int)MaxCyclesSpinner.getValue());
         switch(TFComboBox.getSelectedIndex()){
             case 0:
