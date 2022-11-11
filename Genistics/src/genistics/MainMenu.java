@@ -23,6 +23,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         IslandPopSpinner = new javax.swing.JSpinner();
         MigrationSpinner = new javax.swing.JSpinner();
+        TFComboBox = new javax.swing.JComboBox<>();
         LimitsPanel = new javax.swing.JPanel();
         MaxReps = new javax.swing.JSpinner();
         MaxGens = new javax.swing.JSpinner();
@@ -76,22 +77,29 @@ public class MainMenu extends javax.swing.JFrame {
         MigrationSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MigrationSpinner.setName(""); // NOI18N
 
+        TFComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rastrigin", "Rosenbrock" }));
+
         javax.swing.GroupLayout ArchipelagoLayout = new javax.swing.GroupLayout(Archipelago);
         Archipelago.setLayout(ArchipelagoLayout);
         ArchipelagoLayout.setHorizontalGroup(
             ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ArchipelagoLayout.createSequentialGroup()
-                .addContainerGap(695, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(ArchipelagoRun, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ArchipelagoLayout.createSequentialGroup()
+                        .addComponent(TFComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 609, Short.MAX_VALUE)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(IslandPopSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ArchipelagoLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(MigrationSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ArchipelagoRun, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ArchipelagoLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(MigrationSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         ArchipelagoLayout.setVerticalGroup(
@@ -100,7 +108,8 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(IslandPopSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(IslandPopSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TFComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -242,7 +251,16 @@ public class MainMenu extends javax.swing.JFrame {
         double d=(int)MigrationSpinner.getValue();
         ArchipelagoSettings ArSet=new ArchipelagoSettings((int)IslandPopSpinner.getValue(), d/100);
         GenLimits limit=new GenLimits((int)MaxGens.getValue(), (int)MinGens.getValue(), (int)MaxReps.getValue(),(int)CGDspinner.getValue(),(int)MaxCyclesSpinner.getValue());
-        RastriginIsland.Results(limit,ArSet);
+        switch(TFComboBox.getSelectedIndex()){
+            case 0:
+                RastriginIsland.Results(limit,ArSet);
+                break;
+            case 1:
+                RosenbrockIsland.Results(limit, ArSet);
+                break;
+            default:
+                RastriginIsland.Results(limit,ArSet);
+        }
     }//GEN-LAST:event_ArchipelagoRunActionPerformed
 
     private void MaxGensStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_MaxGensStateChanged
@@ -322,6 +340,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JSpinner MaxReps;
     private javax.swing.JSpinner MigrationSpinner;
     private javax.swing.JSpinner MinGens;
+    private javax.swing.JComboBox<String> TFComboBox;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
