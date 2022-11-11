@@ -2,11 +2,13 @@ package genistics;
 
 import Grapher.*;
 import io.jenetics.DoubleGene;
+import io.jenetics.MeanAlterer;
 import io.jenetics.MultiPointCrossover;
 import io.jenetics.Mutator;
 import io.jenetics.Optimize;
 import io.jenetics.Selector;
 import io.jenetics.SinglePointCrossover;
+import io.jenetics.engine.Codec;
 import io.jenetics.engine.Codecs;
 import io.jenetics.engine.Engine;
 import io.jenetics.engine.EvolutionResult;
@@ -27,10 +29,10 @@ import javax.swing.JTextArea;
  *
  * @author Akman
  */
-public class RastriginIsland {
-    private final static double A=10,R=5.12;
-    private final static int N=20;
-    private static final InvertibleCodec<double[],DoubleGene > CODEC = Codecs.ofVector(DoubleRange.of(-R,R),N);
+public class RosenbrockIsland {
+    private final static double A=10,R=Double.MAX_VALUE;
+    private final static int N=10;
+    private static final Codec<double[],DoubleGene > CODEC = Codecs.ofVector(DoubleRange.of(-10.0,10.0),N);
     static Genographer gngphr;
     static StatGrapher stats;
     private static double bestphenotype=Double.MAX_VALUE;
@@ -40,16 +42,17 @@ public class RastriginIsland {
     private static Simsettings[] settings;
     private static int cycle;
     private static String filename;
-    public RastriginIsland(){
+    public RosenbrockIsland(){
     }
     private static double fitness(double[] x){
         /**
-         * Rastrigin fitness function
+         * Rosenbrock fitness function
          * @param x is an array of two double variables
          */
-        double y= A*N;
-        for(int i=0;i<N; ++i){
-            y+=(double)Math.pow(x[i], 2)-A*(double)Math.cos(2.0*Math.PI*x[i]);}
+        double y=0.0;
+        for(int i=0;i<N-1; ++i){
+            y+=(100.0*Math.pow(x[i+1]-Math.pow(x[i],2),2)+Math.pow(1-x[i],2));
+        }
         return y;
     }
     private static String main(GenLimits limit,ArchipelagoSettings ArSet){
@@ -61,7 +64,7 @@ public class RastriginIsland {
         limits=limit;
         cycle=0;
         
-        filename="rastrigin_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationProb*100)+"-";
+        filename="rosenbrock_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationProb*100)+"-";
         Engine<DoubleGene, Double>[] engine=new Engine[ArSet.IslandPop];
         for(int i=0;i<ArSet.IslandPop;i++){ //create different engine object with different setting each according to each islands settings.
             if(settings[i].crossoverpoint==3){//sets number of crossover point
@@ -69,7 +72,7 @@ public class RastriginIsland {
             }
             filename=filename+settings[i].population+"_"+(int)settings[i].mutationprobability+"_"+(int)settings[i].crossoverprobability+"_"+settings[i].crossoverpoint+"_"+settings[i].selector.toString().charAt(0)+"-";
             engine[i] = Engine
-                    .builder(RastriginIsland::fitness,
+                    .builder(RosenbrockIsland::fitness,
                     CODEC)
                     .populationSize(settings[i].population)
                     .optimize(Optimize.MINIMUM)
@@ -92,12 +95,12 @@ public class RastriginIsland {
         try {//create Genographer object
             gngphr = new Genographer(filename);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(RastriginIsland.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RosenbrockIsland.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {//create StatGrapher object
             stats = new StatGrapher(filename);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(RastriginIsland.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RosenbrockIsland.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         /**
@@ -111,7 +114,7 @@ public class RastriginIsland {
             limit.setRepGen(0);
             cycle++;
             do{
-                Island=engine[island.getIslandInc()].stream(island.Load(),island.getgen()).limit(1).peek(statistics).peek(RastriginIsland::update).collect(toBestEvolutionResult());
+                Island=engine[island.getIslandInc()].stream(island.Load(),island.getgen()).limit(1).peek(statistics).peek(RosenbrockIsland::update).collect(toBestEvolutionResult());
                 island.Save(Island);
                 //System.out.println(finalbest.population().toString());
             }while(!island.limit());
@@ -157,7 +160,7 @@ public class RastriginIsland {
             settings[i]=dialog.showDialog();
         }
 
-        JTextArea l = new JTextArea(RastriginIsland.main(limit,ArSet));
+        JTextArea l = new JTextArea(RosenbrockIsland.main(limit,ArSet));
         d.add(l);
         f.add(d);
         f.pack();
