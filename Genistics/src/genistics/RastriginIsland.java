@@ -111,22 +111,22 @@ public class RastriginIsland {
             limit.setRepGen(0);
             cycle++;
             do{
-                Island=engine[island.getIslandInc()].stream(island.Load(),island.getgen()).limit(1).peek(statistics).peek(RastriginIsland::update).collect(toBestEvolutionResult());
-                island.Save(Island);
+                Island=engine[island.getIslandInc()].stream(island.LoadDouble(),island.getgen()).limit(1).peek(statistics).peek(RastriginIsland::update).collect(toBestEvolutionResult());
+                island.SaveDouble(Island);
                 //System.out.println(finalbest.population().toString());
             }while(!island.limit());
-            if(island.getBestPhenotype().fitness()<bestphenotype){
-                bestphenotype=island.getBestPhenotype().fitness();
+            if(island.getBestPhenotypeDouble().fitness()<bestphenotype){
+                bestphenotype=island.getBestPhenotypeDouble().fitness();
             }
             output="Limits: Min="+limit.getMinGens()
                     +" Max="+limit.getMaxGens()+" Reps="+limit.getMaxReps()+" Data collecting interval:"+limit.getCGD()+" Cycles:"+limit.getMaxCycles()
-                    +"\nGenerations:"+island.getgen()+"\nBest Phenotype:"+island.getBestPhenotype().fitness();
+                    +"\nGenerations:"+island.getgen()+"\nBest Phenotype:"+island.getBestPhenotypeDouble().fitness();
             for(int i=0;i<ArSet.IslandPop;i++){
                 output=output+"\nIsland "+i+":"+"\nSelector:"+settings[i].selector.toString()+" Population:"+settings[i].population+" "+engine[i].alterer().toString()
                         +"\nMutation Probability:"+(int)settings[i].mutationprobability+" Crossover probability:"+(int)settings[i].crossoverprobability+" Crossover Point:"+settings[i].crossoverpoint;
             }
             gngphr.Writeln(output);
-            stats.Writeln(cycle,island.getgen(),island.getBestPhenotype().fitness());
+            stats.Writeln(cycle,island.getgen(),island.getBestPhenotypeDouble().fitness());
         }while(limit.getMaxCycles()>cycle);
         
         gngphr.finish();
@@ -137,7 +137,7 @@ public class RastriginIsland {
     }
     private static void update(final EvolutionResult<DoubleGene, Double> result){
         if((result.totalGenerations())%limits.getCGD()<1 | result.totalGenerations()==1){
-            gngphr.Pooldump(result,"Cycle:"+cycle+",Gen:"+result.totalGenerations()+",Island:"+(island.getIslandInc()+1)+",");
+            gngphr.PooldumpDouble(result,"Cycle:"+cycle+",Gen:"+result.totalGenerations()+",Island:"+(island.getIslandInc()+1)+",");
         }
     }
     public static void Results(GenLimits limit,ArchipelagoSettings ArSet){

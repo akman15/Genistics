@@ -77,7 +77,7 @@ public class MainMenu extends javax.swing.JFrame {
         MigrationSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MigrationSpinner.setName(""); // NOI18N
 
-        TFComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rastrigin", "Rosenbrock" }));
+        TFComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rastrigin", "Rosenbrock", "TSP" }));
 
         javax.swing.GroupLayout ArchipelagoLayout = new javax.swing.GroupLayout(Archipelago);
         Archipelago.setLayout(ArchipelagoLayout);
@@ -257,6 +257,9 @@ public class MainMenu extends javax.swing.JFrame {
                 break;
             case 1:
                 RosenbrockIsland.Results(limit, ArSet);
+                break;
+            case 2:
+                TSPIsland.Results(limit, ArSet);
                 break;
             default:
                 RastriginIsland.Results(limit,ArSet);

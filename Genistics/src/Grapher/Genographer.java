@@ -6,6 +6,7 @@ package Grapher;
 
 import genistics.Genistics;
 import io.jenetics.DoubleGene;
+import io.jenetics.EnumGene;
 import io.jenetics.Phenotype;
 import io.jenetics.engine.EvolutionResult;
 import io.jenetics.util.ISeq;
@@ -92,10 +93,20 @@ public class Genographer {
         }
         writer.close();
     }
-    public void Pooldump(EvolutionResult<DoubleGene, Double> result,String Info){
+    public void PooldumpDouble(EvolutionResult<DoubleGene, Double> result,String Info){
         check=false;
         writer.print(Info);
         ISeq<Phenotype<DoubleGene, Double>> pop = result.population();
+        for(int i=0;i<pop.length();i++){//Write only fitness value of phenotype
+            writer.print(pop.get(i).fitness()+",");
+        }
+        writer.println();
+        //writer.println(result.population());
+    }
+    public void PooldumpEnum(EvolutionResult<EnumGene<double[]>,Double> result,String Info){
+        check=false;
+        writer.print(Info);
+        ISeq<Phenotype<EnumGene<double[]>,Double>> pop = result.population();
         for(int i=0;i<pop.length();i++){//Write only fitness value of phenotype
             writer.print(pop.get(i).fitness()+",");
         }

@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import genistics.GenPO.GenPost;
+import genistics.GenPO.MailDouble;
+import genistics.GenPO.MailEnum;
+import io.jenetics.EnumGene;
 import java.util.Random;
 
 /**
@@ -25,10 +28,12 @@ import java.util.Random;
 public class Archipelago {//A collection of islands
     private final int IslandPop;
     private int IslandInc=0;
-    private Phenotype<DoubleGene, Double> BestPhenotype=null;
+    private Phenotype<DoubleGene, Double> BestPhenotypeDouble=null;
+    private Phenotype<EnumGene<double[]>,Double> BestPhenotypeEnum=null;
     private List<Long> gen=null;
     private boolean inited=false;
-    private List<ISeq<Phenotype<DoubleGene, Double>>> population;
+    private List<ISeq<Phenotype<DoubleGene, Double>>> populationDouble;
+    private List<ISeq<Phenotype<EnumGene<double[]>,Double>>> populationEnum;
     //private Simsettings[] settings;
     private Genographer gngrphr;
     private GenPost post;
@@ -41,18 +46,22 @@ public class Archipelago {//A collection of islands
         this.MigrationProb=ArSet.MigrationProb;
         this.limit=limit;
         gen = new ArrayList();
-        population = new ArrayList();
+        populationDouble = new ArrayList();
+        populationEnum = new ArrayList();
         //fortransfer = new LinkedList();
         post=new GenPost(IslandPop);
     }
 
-    public Phenotype<DoubleGene, Double> getBestPhenotype() {
-        return BestPhenotype;
+    public Phenotype<DoubleGene, Double> getBestPhenotypeDouble() {
+        return BestPhenotypeDouble;
+    }
+    public Phenotype<EnumGene<double[]>,Double> getBestPhenotypeEnum() {
+        return BestPhenotypeEnum;
     }
     /*
         Saves the population of the result argument to a list
     */
-    public void Save(EvolutionResult<DoubleGene, Double> result){
+    public void SaveDouble(EvolutionResult<DoubleGene, Double> result){
         ISeq<Phenotype<DoubleGene, Double>> pop1 = result.population();
         ISeq<Phenotype<DoubleGene, Double>> pop2 = ISeq.empty();
         //System.out.println("population 1:"+pop1.toString());
@@ -64,16 +73,16 @@ public class Archipelago {//A collection of islands
         }
         
         try{//save the population in the population 
-            population.set(IslandInc,pop1);
+            populationDouble.set(IslandInc,pop1);
         }catch(Exception e){
-            population.add(pop1);
+            populationDouble.add(pop1);
         }
         
-        if(BestPhenotype==null){//save best phenotype for limit purpose
-            BestPhenotype=result.bestPhenotype();
+        if(BestPhenotypeDouble==null){//save best phenotype for limit purpose
+            BestPhenotypeDouble=result.bestPhenotype();
         }else{
-            if(BestPhenotype.fitness()>result.bestPhenotype().fitness()){
-                BestPhenotype=result.bestPhenotype();
+            if(BestPhenotypeDouble.fitness()>result.bestPhenotype().fitness()){
+                BestPhenotypeDouble=result.bestPhenotype();
                 limit.setRepGen(getgen());
             }
         }
@@ -90,14 +99,69 @@ public class Archipelago {//A collection of islands
             */
             if(IslandPop==1){
                 //gngrphr.Writeln("fortransfer to Island "+Inext()+":"+result.bestPhenotype().fitness());
-                GenMail mail = new GenMail(result.bestPhenotype(), Inext() , IslandInc);
-                post.sent(mail);
+                MailDouble mail = new MailDouble(result.bestPhenotype(), Inext() , IslandInc);
+                post.sentDouble(mail);
             }
             else{
                 int randisland=randIsland();
                 //gngrphr.Writeln("fortransfer to Island "+randisland+":"+result.bestPhenotype().fitness());
-                GenMail mail = new GenMail(result.bestPhenotype(), randisland , IslandInc);
-                post.sent(mail);
+                MailDouble mail = new MailDouble(result.bestPhenotype(), randisland , IslandInc);
+                post.sentDouble(mail);
+            }
+            //population.set(IslandInc,pop2);//save the new ISeq without the mailed phenotype
+        }
+        
+        IncrementI();
+        //System.out.println("population 2:"+pop2.toString());
+    }
+    
+    // Save for EnumGene
+    public void SaveEnum(EvolutionResult<EnumGene<double[]>,Double> result){
+        ISeq<Phenotype<EnumGene<double[]>,Double>> pop1 = result.population();
+        ISeq<Phenotype<EnumGene<double[]>,Double>> pop2 = ISeq.empty();
+        //System.out.println("population 1:"+pop1.toString());
+        //System.out.println("Adding last"+fortransfer.peekLast());
+        if(inited){//checks if the gen list is initiated,if yes it increments the int in the position, if not add the value 1.
+            gen.set(getIslandInc(),gen.get(getIslandInc())+1);
+        }else{
+            gen.add((long)1);
+        }
+        
+        try{//save the population in the population 
+            populationEnum.set(IslandInc,pop1);
+        }catch(Exception e){
+            populationEnum.add(pop1);
+        }
+        
+        if(BestPhenotypeEnum==null){//save best phenotype for limit purpose
+            BestPhenotypeEnum=result.bestPhenotype();
+        }else{
+            if(BestPhenotypeEnum.fitness()>result.bestPhenotype().fitness()){
+                BestPhenotypeEnum=result.bestPhenotype();
+                limit.setRepGen(getgen());
+            }
+        }
+                
+        if((Math.random()+MigrationProb)>1 && gen.get(IslandInc)>0 && IslandPop>0){ //random chance for transfer between islands
+            /*Boolean found=false;
+            for(int i=0;i<pop1.length();i++){//create a new ISeq without the best phenotype
+                if(pop1.get(i)==result.bestPhenotype() && !found){
+                  found=true;
+                }else{
+                    pop2=pop2.append(pop1.get(i));
+                }
+            }
+            */
+            if(IslandPop==1){
+                //gngrphr.Writeln("fortransfer to Island "+Inext()+":"+result.bestPhenotype().fitness());
+                MailEnum mail = new MailEnum(result.bestPhenotype(), Inext() , IslandInc);
+                post.sentEnum(mail);
+            }
+            else{
+                int randisland=randIsland();
+                //gngrphr.Writeln("fortransfer to Island "+randisland+":"+result.bestPhenotype().fitness());
+                MailEnum mail = new MailEnum(result.bestPhenotype(), randisland , IslandInc);
+                post.sentEnum(mail);
             }
             //population.set(IslandInc,pop2);//save the new ISeq without the mailed phenotype
         }
@@ -110,11 +174,11 @@ public class Archipelago {//A collection of islands
      returns the population of the current island index or an empty one and splices into the population any
      migrating phenotype if there are any
     */
-    public ISeq<Phenotype<DoubleGene, Double>> Load(){
+    public ISeq<Phenotype<DoubleGene, Double>> LoadDouble(){
         try{
-            ISeq<Phenotype<DoubleGene, Double>> pop =population.get(getIslandInc());
+            ISeq<Phenotype<DoubleGene, Double>> pop =populationDouble.get(getIslandInc());
                 if(IslandPop>0){
-                    GenMail incomingmail=post.recieve(IslandInc);
+                    MailDouble incomingmail=post.recieveDouble(IslandInc);
                     if(incomingmail!=null){
                         //System.out.println(incomingmail);
                         //gngrphr.Writeln("Appending to Island "+IslandInc+":"+incomingmail.getmail());
@@ -128,6 +192,25 @@ public class Archipelago {//A collection of islands
             return ISeq.empty();
         }
     }
+    public ISeq<Phenotype<EnumGene<double[]>,Double>> LoadEnum(){
+        try{
+            ISeq<Phenotype<EnumGene<double[]>,Double>> pop =populationEnum.get(getIslandInc());
+                if(IslandPop>0){
+                    MailEnum incomingmail=post.recieveEnum(IslandInc);
+                    if(incomingmail!=null){
+                        //System.out.println(incomingmail);
+                        //gngrphr.Writeln("Appending to Island "+IslandInc+":"+incomingmail.getmail());
+                        pop=pop.append(incomingmail.getmail());
+                        //gngrphr.Writeln("population loading Island "+IslandInc+" population:"+pop.toString());
+                    }
+                }
+            return pop;
+        }
+        catch(Exception e){
+            return ISeq.empty();
+        }
+    }
+    
     /**
      * @return the Generations
      */

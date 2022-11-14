@@ -6,22 +6,20 @@ package genistics.GenPO;
 
 import io.jenetics.DoubleGene;
 import io.jenetics.Phenotype;
-import java.util.List;
 
 /**
  *
  * @author Akman
  */
 public class GenMail {//Genetic mail class
-    private Phenotype<DoubleGene, Double> mail=null;
+
     private boolean reply=false;
     private int receiver;
     private int senter;
-    public GenMail(Phenotype<DoubleGene, Double> mail,int receiver,int senter){
-        this.mail=mail;
+    
+    public GenMail(int receiver,int senter){
         this.receiver=receiver;
         this.senter=senter;
-        
     }
     public boolean getreply(){
         return reply;
@@ -31,8 +29,5 @@ public class GenMail {//Genetic mail class
     }
     public int getsenter(){
         return senter;
-    }
-    public Phenotype<DoubleGene, Double> getmail(){
-        return mail;
     }
 }
