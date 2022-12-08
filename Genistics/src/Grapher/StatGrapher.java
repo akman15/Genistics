@@ -16,6 +16,7 @@ import java.util.Collections;
  * @author Akman
  */
 public class StatGrapher {
+    private File file;
     private final PrintWriter writer;
     private ArrayList<Long> genlist= new ArrayList<>();//saves individual generations in a list
     private ArrayList<Double> phenlist= new ArrayList<>();//saves individual phenotypes in a list
@@ -29,7 +30,7 @@ public class StatGrapher {
          * such as the selector,mutation probability etc.
          */
         int i=1;
-        File file =new File(Genistics.GetGFolder().toString()+"\\"+filename+"stats.csv");
+        file =new File(Genistics.GetGFolder().toString()+"\\"+filename+"stats.csv");
         while(file.exists()){
             file= new File(Genistics.GetGFolder().toString()+"\\"+filename+"("+i+")stats.csv");
             i++;
@@ -118,5 +119,8 @@ public class StatGrapher {
         Collections.sort(sortedG);
         Collections.sort(sortedP);
         writer.println("Best,"+sortedG.get(0)+","+sortedP.get(0));
+    }
+    public String getfilename(){
+        return file.toString();
     }
 }

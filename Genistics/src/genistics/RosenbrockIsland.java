@@ -2,23 +2,21 @@ package genistics;
 
 import Grapher.*;
 import io.jenetics.DoubleGene;
-import io.jenetics.MeanAlterer;
 import io.jenetics.MultiPointCrossover;
 import io.jenetics.Mutator;
 import io.jenetics.Optimize;
 import io.jenetics.Selector;
-import io.jenetics.SinglePointCrossover;
 import io.jenetics.engine.Codec;
 import io.jenetics.engine.Codecs;
 import io.jenetics.engine.Engine;
 import io.jenetics.engine.EvolutionResult;
 import static io.jenetics.engine.EvolutionResult.toBestEvolutionResult;
 import io.jenetics.engine.EvolutionStatistics;
-import io.jenetics.engine.InvertibleCodec;
-import static io.jenetics.engine.Limits.bySteadyFitness;
 import io.jenetics.util.DoubleRange;
 import java.awt.GridLayout;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -106,7 +104,6 @@ public class RosenbrockIsland {
         /**
          * Runs the engine for multiple cycles and records relevant information to 
          * the genographer instance.
-         * todo made number of cycles modular
         */
         String output;
         do{
@@ -135,8 +132,18 @@ public class RosenbrockIsland {
         gngphr.finish();
         stats.finish();
         
-        output="Selector:"+settings[0].selector.toString()+"\nPopulation:"+settings[0].population+"\nLimits: Min="+limit.getMinGens()+" Max="+limit.getMaxGens()+" Reps="+limit.getMaxReps()+" Data collecting interval:"+limit.getCGD()+" Cycles:"+limit.getMaxCycles()+"\n"+engine[0].alterer().toString()+"\n"+statistics.toString()+"\nBest Phenotype overall:"+bestphenotype;
-        return (output);//todo need to remove
+        output="";
+        try {
+            Scanner scanner = new Scanner(new File(stats.getfilename()));
+            while(scanner.hasNextLine()){
+                output = output+"\n"+scanner.nextLine();
+            }
+            scanner.close();
+            } catch (FileNotFoundException ex) {
+            Logger.getLogger(RastriginIsland.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return (output);
     }
     private static void update(final EvolutionResult<DoubleGene, Double> result){
         if((result.totalGenerations())%limits.getCGD()<1 | result.totalGenerations()==1){
@@ -160,11 +167,17 @@ public class RosenbrockIsland {
             settings[i]=dialog.showDialog();
         }
 
-        JTextArea l = new JTextArea(RosenbrockIsland.main(limit,ArSet));
+        JTextArea l = new JTextArea("Running...");
+        l.setEditable(false);
         d.add(l);
         f.add(d);
         f.pack();
         f.setLocationRelativeTo(null);
         f.setVisible(true);
+        Thread mainThread = new Thread(() -> {
+            l.setText(RosenbrockIsland.main(limit,ArSet));
+            f.pack();
+        });
+        mainThread.start();
     }
 }

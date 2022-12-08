@@ -6,17 +6,18 @@ import io.jenetics.MultiPointCrossover;
 import io.jenetics.Mutator;
 import io.jenetics.Optimize;
 import io.jenetics.Selector;
-import io.jenetics.SinglePointCrossover;
 import io.jenetics.engine.Codecs;
 import io.jenetics.engine.Engine;
 import io.jenetics.engine.EvolutionResult;
 import static io.jenetics.engine.EvolutionResult.toBestEvolutionResult;
 import io.jenetics.engine.EvolutionStatistics;
 import io.jenetics.engine.InvertibleCodec;
-import static io.jenetics.engine.Limits.bySteadyFitness;
 import io.jenetics.util.DoubleRange;
 import java.awt.GridLayout;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -103,7 +104,6 @@ public class RastriginIsland {
         /**
          * Runs the engine for multiple cycles and records relevant information to 
          * the genographer instance.
-         * todo made number of cycles modular
         */
         String output;
         do{
@@ -131,16 +131,26 @@ public class RastriginIsland {
         
         gngphr.finish();
         stats.finish();
+        //output="Selector:"+settings[0].selector.toString()+"\nPopulation:"+settings[0].population+"\nLimits: Min="+limit.getMinGens()+" Max="+limit.getMaxGens()+" Reps="+limit.getMaxReps()+" Data collecting interval:"+limit.getCGD()+" Cycles:"+limit.getMaxCycles()+"\n"+engine[0].alterer().toString()+"\n"+statistics.toString()+"\nBest Phenotype overall:"+bestphenotype;
+        output="";
+        try {
+            Scanner scanner = new Scanner(new File(stats.getfilename()));
+            while(scanner.hasNextLine()){
+                output = output+"\n"+scanner.nextLine();
+            }
+            scanner.close();
+            } catch (FileNotFoundException ex) {
+            Logger.getLogger(RastriginIsland.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-        output="Selector:"+settings[0].selector.toString()+"\nPopulation:"+settings[0].population+"\nLimits: Min="+limit.getMinGens()+" Max="+limit.getMaxGens()+" Reps="+limit.getMaxReps()+" Data collecting interval:"+limit.getCGD()+" Cycles:"+limit.getMaxCycles()+"\n"+engine[0].alterer().toString()+"\n"+statistics.toString()+"\nBest Phenotype overall:"+bestphenotype;
-        return (output);//todo need to remove
+        return (output);
     }
     private static void update(final EvolutionResult<DoubleGene, Double> result){
         if((result.totalGenerations())%limits.getCGD()<1 | result.totalGenerations()==1){
             gngphr.PooldumpDouble(result,"Cycle:"+cycle+",Gen:"+result.totalGenerations()+",Island:"+(island.getIslandInc()+1)+",");
         }
     }
-    public static void Results(GenLimits limit,ArchipelagoSettings ArSet){
+    public static void Results(GenLimits limit,ArchipelagoSettings ArSet) throws IOException{
         /**
          * Creates a new window that displays the EvolutionStatistics results
          * as well as other information, of the last cycle.
@@ -155,13 +165,19 @@ public class RastriginIsland {
         for(int i=0;i<ArSet.IslandPop;i++){
             IslandMenu dialog = new IslandMenu(f,true);
             settings[i]=dialog.showDialog();
-        }
-
-        JTextArea l = new JTextArea(RastriginIsland.main(limit,ArSet));
+        }  
+        
+        JTextArea l = new JTextArea("Running...");
+        l.setEditable(false);
         d.add(l);
         f.add(d);
         f.pack();
         f.setLocationRelativeTo(null);
         f.setVisible(true);
+        Thread mainThread = new Thread(() -> {
+            l.setText(RastriginIsland.main(limit,ArSet));
+            f.pack();
+        });
+        mainThread.start();
     }
 }
