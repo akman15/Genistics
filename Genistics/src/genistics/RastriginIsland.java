@@ -150,7 +150,7 @@ public class RastriginIsland {
             gngphr.PooldumpDouble(result,"Cycle:"+cycle+",Gen:"+result.totalGenerations()+",Island:"+(island.getIslandInc()+1)+",");
         }
     }
-    public static void Results(GenLimits limit,ArchipelagoSettings ArSet) throws IOException{
+    public static void Results(GenLimits limit,ArchipelagoSettings ArSet) {
         /**
          * Creates a new window that displays the EvolutionStatistics results
          * as well as other information, of the last cycle.
