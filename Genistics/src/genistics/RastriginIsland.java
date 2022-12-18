@@ -13,6 +13,7 @@ import static io.jenetics.engine.EvolutionResult.toBestEvolutionResult;
 import io.jenetics.engine.EvolutionStatistics;
 import io.jenetics.engine.InvertibleCodec;
 import io.jenetics.util.DoubleRange;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -169,7 +171,8 @@ public class RastriginIsland {
         
         JTextArea l = new JTextArea("Running...");
         l.setEditable(false);
-        d.add(l);
+        JScrollPane sp = new JScrollPane(l);
+        d.add(sp);
         f.add(d);
         f.pack();
         f.setLocationRelativeTo(null);

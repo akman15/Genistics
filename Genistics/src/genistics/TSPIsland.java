@@ -25,6 +25,7 @@ import java.util.logging.Logger;
 import java.util.stream.IntStream;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -192,7 +193,8 @@ public class TSPIsland implements Problem<ISeq<double[]>,EnumGene<double[]>,Doub
 
         JTextArea l = new JTextArea("Running...");
         l.setEditable(false);
-        d.add(l);
+        JScrollPane sp = new JScrollPane(l);
+        d.add(sp);
         f.add(d);
         f.pack();
         f.setLocationRelativeTo(null);

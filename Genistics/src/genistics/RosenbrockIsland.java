@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -169,7 +170,8 @@ public class RosenbrockIsland {
 
         JTextArea l = new JTextArea("Running...");
         l.setEditable(false);
-        d.add(l);
+        JScrollPane sp = new JScrollPane(l);
+        d.add(sp);
         f.add(d);
         f.pack();
         f.setLocationRelativeTo(null);
