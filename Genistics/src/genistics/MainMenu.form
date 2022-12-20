@@ -125,6 +125,7 @@
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="MigrationSpinner" min="-2" pref="64" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="BatchButton" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -148,7 +149,9 @@
                       </Group>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                       <Component id="ArchipelagoRun" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="BatchButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="46" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -208,6 +211,14 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
+            <Component class="javax.swing.JButton" name="BatchButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Run Batch"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BatchButtonActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="LimitsPanel">
@@ -239,7 +250,7 @@
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="MaxCyclesSpinner" min="-2" pref="64" max="-2" attributes="0"/>
+                              <Component id="MaxTasksSpinner" min="-2" pref="64" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
@@ -269,7 +280,7 @@
                           <Component id="CGDspinner" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="MaxCyclesSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="MaxTasksSpinner" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="249" max="32767" attributes="0"/>
@@ -353,7 +364,7 @@
                 <Property name="text" type="java.lang.String" value="Generations"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JSpinner" name="MaxCyclesSpinner">
+            <Component class="javax.swing.JSpinner" name="MaxTasksSpinner">
               <Properties>
                 <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
                   <SpinnerModel initial="20" maximum="1000" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>

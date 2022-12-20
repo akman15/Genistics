@@ -5,15 +5,11 @@
 package genistics;
 
 import Grapher.Genographer;
-import genistics.GenPO.GenMail;
-import genistics.GenPO.GenPost;
 import io.jenetics.DoubleGene;
 import io.jenetics.Phenotype;
 import io.jenetics.engine.EvolutionResult;
 import io.jenetics.util.ISeq;
-import io.jenetics.util.MSeq;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import genistics.GenPO.GenPost;
 import genistics.GenPO.MailDouble;

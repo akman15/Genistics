@@ -205,4 +205,14 @@ public class TSPIsland implements Problem<ISeq<double[]>,EnumGene<double[]>,Doub
         });
         mainThread.start();
     }
+    public static String QuickStart(GenLimits limit,ArchipelagoSettings ArSet,Simsettings set){ //makes a quick single island task
+        settings=new Simsettings[1];
+        settings[0]=set;
+        return TSPIsland.main(limit,ArSet);
+    }
+    public static String Start(GenLimits limit,ArchipelagoSettings ArSet,Simsettings[] set){ //makes a  task
+        settings=new Simsettings[ArSet.IslandPop];
+        settings=set;
+        return TSPIsland.main(limit,ArSet);
+    }
 }

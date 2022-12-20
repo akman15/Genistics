@@ -150,7 +150,7 @@ public class RastriginIsland {
             gngphr.PooldumpDouble(result,"Cycle:"+cycle+",Gen:"+result.totalGenerations()+",Island:"+(island.getIslandInc()+1)+",");
         }
     }
-    public static void Results(GenLimits limit,ArchipelagoSettings ArSet) {
+    public static void Results(GenLimits limit,ArchipelagoSettings ArSet,int TF) {
         /**
          * Creates a new window that displays the EvolutionStatistics results
          * as well as other information, of the last cycle.
@@ -180,5 +180,15 @@ public class RastriginIsland {
             f.pack();
         });
         mainThread.start();
+    }
+    public static String QuickStart(GenLimits limit,ArchipelagoSettings ArSet,Simsettings set){ //makes a quick single island task
+        settings=new Simsettings[1];
+        settings[0]=set;
+        return RastriginIsland.main(limit,ArSet);
+    }
+    public static String Start(GenLimits limit,ArchipelagoSettings ArSet,Simsettings[] set){ //makes a task
+        settings=new Simsettings[ArSet.IslandPop];
+        settings=set;
+        return RastriginIsland.main(limit,ArSet);
     }
 }

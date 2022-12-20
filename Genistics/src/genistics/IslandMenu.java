@@ -13,7 +13,6 @@ public class IslandMenu extends javax.swing.JDialog {
     Simsettings settings;
     public IslandMenu(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        this.setUndecorated(true);
         initComponents();
     }
     /**

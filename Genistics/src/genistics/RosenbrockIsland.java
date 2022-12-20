@@ -182,4 +182,14 @@ public class RosenbrockIsland {
         });
         mainThread.start();
     }
+    public static String QuickStart(GenLimits limit,ArchipelagoSettings ArSet,Simsettings set){ //makes a quick single island task
+        settings=new Simsettings[1];
+        settings[0]=set;
+        return RosenbrockIsland.main(limit,ArSet);
+    }
+    public static String Start(GenLimits limit,ArchipelagoSettings ArSet,Simsettings[] set){ //makes a  task
+        settings=new Simsettings[ArSet.IslandPop];
+        settings=set;
+        return RosenbrockIsland.main(limit,ArSet);
+    }
 }
