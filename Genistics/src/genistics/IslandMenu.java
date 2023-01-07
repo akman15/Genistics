@@ -77,7 +77,7 @@ public class IslandMenu extends javax.swing.JDialog {
 
         jLabel5.setText("Crossover Points");
 
-        Popspinner.setModel(new javax.swing.SpinnerNumberModel(20, 2, 1000, 1));
+        Popspinner.setModel(new javax.swing.SpinnerNumberModel(50, 2, 1000, 1));
         Popspinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         Popspinner.setName(""); // NOI18N
 

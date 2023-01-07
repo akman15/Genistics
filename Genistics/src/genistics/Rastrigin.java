@@ -38,7 +38,7 @@ public class Rastrigin {
     }
     private static double fitness(double[] x){
         /**
-         * Rastrigin fitness function
+         * Rastrigin fitness function based on Jenetics Rastrigin example solution
          * @param x is an array of two double variables
          */
         double y= A*N;

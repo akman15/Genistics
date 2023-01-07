@@ -38,8 +38,8 @@ public class StatGrapher {
         writer = new PrintWriter(file);
         String temp1[]=filename.split("-");
         String temp2[]=temp1[0].split("_");
-        writer.println("Test function:"+temp2[0]+",Island Population:"+temp2[1]+
-        ",Migration chance%:"+temp2[2]);
+        writer.println("Test function:"+temp2[0]+",Island Population:"+temp2[2]+
+        ",Migration chance%:"+temp2[3]);
         for(i=1;i<temp1.length;i++){
             temp2=temp1[i].split("_");
             writer.println("Island:"+i+",Population:"+temp2[0]+",Mutation rate:"+temp2[1]+
