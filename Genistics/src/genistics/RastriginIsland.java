@@ -71,6 +71,9 @@ public class RastriginIsland {
             case 1:
                 type="RtR";
                 break;
+            case 2:
+                type="RR";
+                break;
         }
         
         filename="rastrigin_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationInterval)+"_"+type+"-";

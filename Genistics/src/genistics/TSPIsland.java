@@ -151,8 +151,8 @@ public class TSPIsland implements Problem<ISeq<double[]>,EnumGene<double[]>,Doub
                 Island=engine[Archipelago.getIslandInc()].stream(Archipelago.LoadEnum(),Archipelago.getgen()).limit(Limits.byFixedGeneration(1)).peek(statistics).peek(TSPIsland::update).collect(toBestEvolutionResult());
                 Archipelago.SetGen(Island.generation()+1);
                 Archipelago.SaveEnum(Island);
+                //System.out.println("Generation "+Island.generation());
                 Archipelago.IncrementI();
-                //System.out.println("Best Phenotype: "+(Archipelago.getBestPhenotypeEnum().fitness()-minPathLength));
             }while(!Archipelago.limit() && (Archipelago.getBestPhenotypeEnum().fitness()-minPathLength>0));
             if(Archipelago.getBestPhenotypeEnum().fitness()<bestphenotype){
                 bestphenotype=Archipelago.getBestPhenotypeEnum().fitness();

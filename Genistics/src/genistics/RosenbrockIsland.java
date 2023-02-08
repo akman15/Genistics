@@ -72,6 +72,9 @@ public class RosenbrockIsland {
             case 1:
                 type="RtR";
                 break;
+                case 2:
+            type="RR";
+                break;
         }
         
         filename="rosenbrock_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationInterval)+"_"+type+"-";
