@@ -61,13 +61,13 @@ public class IslandMenu extends javax.swing.JDialog {
 
         jLabel2.setText("Population");
 
-        MutationSpinner.setModel(new javax.swing.SpinnerNumberModel(10, 0, 100, 1));
+        MutationSpinner.setModel(new javax.swing.SpinnerNumberModel(20, 0, 100, 1));
         MutationSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MutationSpinner.setName(""); // NOI18N
 
         jLabel3.setText("Mutation Rate %");
 
-        CrossoverSpinner.setModel(new javax.swing.SpinnerNumberModel(10, 0, 100, 1));
+        CrossoverSpinner.setModel(new javax.swing.SpinnerNumberModel(80, 0, 100, 1));
         CrossoverSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         CrossoverSpinner.setName(""); // NOI18N
 

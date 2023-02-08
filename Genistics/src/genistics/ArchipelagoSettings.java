@@ -11,9 +11,13 @@ package genistics;
  */
 public class ArchipelagoSettings {
     int IslandPop=1;
-    double MigrationProb=0.0;
-    ArchipelagoSettings(int IslandPop,double MigrationProb){
+    int MigrationInterval=0;
+    int migrationtype=0;
+    int MigrationRate=1;
+    ArchipelagoSettings(int IslandPop,int MigrationInterval,int migrationtype,int MigrationRate){
         this.IslandPop=IslandPop;
-        this.MigrationProb=MigrationProb;
+        this.MigrationInterval=MigrationInterval;
+        this.migrationtype=migrationtype;
+        this.MigrationRate=MigrationRate;
     }
 }

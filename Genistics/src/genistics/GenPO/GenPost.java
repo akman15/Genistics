@@ -17,8 +17,8 @@ import java.util.List;
  */
 public class GenPost {//Genetic post office
     private int Islandpop;
-    private List<MailDouble> poboxDouble;
-    private List<MailEnum> poboxEnum;
+    private List<MailDouble[]> poboxDouble;
+    private List<MailEnum[]> poboxEnum;
     public GenPost(int Islandpop){
         this.Islandpop=Islandpop;
         poboxDouble= new ArrayList();
@@ -28,19 +28,19 @@ public class GenPost {//Genetic post office
             poboxEnum.add(null);
         }
     }
-    public void sentDouble(MailDouble mail){
-        poboxDouble.set(mail.getreceiver(),mail);
+    public void sentDouble(MailDouble mail[]){
+        poboxDouble.set(mail[0].getreceiver(),mail);
     }
-    public void sentEnum(MailEnum mail){
-        poboxEnum.set(mail.getreceiver(),mail);
+    public void sentEnum(MailEnum mail[]){
+        poboxEnum.set(mail[0].getreceiver(),mail);
     }
-    public MailDouble recieveDouble(int Islandreciever){
-        MailDouble mail=poboxDouble.get(Islandreciever);
+    public MailDouble[] recieveDouble(int Islandreciever){
+        MailDouble mail[]=poboxDouble.get(Islandreciever);
         poboxDouble.set(Islandreciever,null);
         return mail;
     }
-    public MailEnum recieveEnum(int Islandreciever){
-        MailEnum mail=poboxEnum.get(Islandreciever);
+    public MailEnum[] recieveEnum(int Islandreciever){
+        MailEnum mail[]=poboxEnum.get(Islandreciever);
         poboxEnum.set(Islandreciever,null);
         return mail;
     }

@@ -71,12 +71,12 @@ public class ResultsWindow {
         mainThread.start();
         Thread counterthread = new Thread(() -> {
             String ri[]={"-__","_-_","__-"};//running indicator
-            int index=0;
+            int index=0,strln=ri.length;
             while(mainThread.isAlive()){
                 l.setText("Running"+ri[index]);
                 f.pack();
                 index++;
-                if(index>=ri.length){
+                if(index>=strln){
                     index=0;
                 }
                 try {

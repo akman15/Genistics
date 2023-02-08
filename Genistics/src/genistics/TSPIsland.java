@@ -13,6 +13,7 @@ import io.jenetics.engine.EvolutionResult;
 import io.jenetics.engine.Problem ;
 import static io.jenetics.engine.EvolutionResult.toBestEvolutionResult;
 import io.jenetics.engine.EvolutionStatistics;
+import io.jenetics.engine.Limits;
 import io.jenetics.util.ISeq;
 import io.jenetics.util.MSeq;
 import java.awt.GridLayout;
@@ -35,13 +36,13 @@ import javax.swing.JTextArea;
  */
 public class TSPIsland implements Problem<ISeq<double[]>,EnumGene<double[]>,Double>{
     private final ISeq<double[]> _points;
-    private final static int stops=20;
-    private final static double radius=10;
+    private final static int stops=50;
+    private final static double radius=25;
     static Genographer gngphr;
     static StatGrapher stats;
     private static double bestphenotype=Double.MAX_VALUE;
     static EvolutionResult<EnumGene<double[]>,Double> Island;
-    static Archipelago island;
+    static Archipelago Archipelago;
     static GenLimits limits;
     private static Simsettings[] settings;
     private static int cycle;
@@ -86,8 +87,20 @@ public class TSPIsland implements Problem<ISeq<double[]>,EnumGene<double[]>,Doub
         TSPIsland tsp = new TSPIsland();
         double minPathLength = 2.0*stops*radius*Math.sin(Math.PI/stops); //Absolute minimum based on the radius and stops
         //System.out.println("Min path length:"+minPathLength);
+        String type="";
+        switch(ArSet.migrationtype){
+            case 0:
+                type="RtA";
+                break;
+            case 1:
+                type="RtR";
+                break;
+            case 2:
+                type="RR";
+                break;
+        }
         
-        filename="TSP_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationProb*100)+"-";
+        filename="TSP_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationInterval)+"_"+type+"-";
         Engine<EnumGene<double[]>,Double>[] engine=new Engine[ArSet.IslandPop];
         for(int i=0;i<ArSet.IslandPop;i++){ //create different engine object with different setting each according to each islands settings.
             if(settings[i].crossoverpoint==3){//sets number of crossover point
@@ -131,26 +144,28 @@ public class TSPIsland implements Problem<ISeq<double[]>,EnumGene<double[]>,Doub
         */
         String output;
         do{
-            island=new Archipelago(ArSet,limit,gngphr);
+            Archipelago=new Archipelago(ArSet,limit,gngphr);
             limit.setRepGen(0);
             cycle++;
             do{
-                Island=engine[island.getIslandInc()].stream(island.LoadEnum(),island.getgen()).limit(1).peek(statistics).peek(TSPIsland::update).collect(toBestEvolutionResult());
-                island.SaveEnum(Island);
-                //System.out.println(finalbest.population().toString());
-            }while(!island.limit() && island.getBestPhenotypeEnum().fitness()>minPathLength);//stops searching if the absolute best is found
-            if(island.getBestPhenotypeEnum().fitness()<bestphenotype){
-                bestphenotype=island.getBestPhenotypeEnum().fitness();
+                Island=engine[Archipelago.getIslandInc()].stream(Archipelago.LoadEnum(),Archipelago.getgen()).limit(Limits.byFixedGeneration(1)).peek(statistics).peek(TSPIsland::update).collect(toBestEvolutionResult());
+                Archipelago.SetGen(Island.generation()+1);
+                Archipelago.SaveEnum(Island);
+                Archipelago.IncrementI();
+                //System.out.println("Best Phenotype: "+(Archipelago.getBestPhenotypeEnum().fitness()-minPathLength));
+            }while(!Archipelago.limit() && (Archipelago.getBestPhenotypeEnum().fitness()-minPathLength>0));
+            if(Archipelago.getBestPhenotypeEnum().fitness()<bestphenotype){
+                bestphenotype=Archipelago.getBestPhenotypeEnum().fitness();
             }
             output="Limits: Min="+limit.getMinGens()
                     +" Max="+limit.getMaxGens()+" Reps="+limit.getMaxReps()+" Data collecting interval:"+limit.getCGD()+" Cycles:"+limit.getMaxCycles()
-                    +"\nGenerations:"+island.getgen()+"\nBest Phenotype:"+island.getBestPhenotypeEnum().fitness();
+                    +"\nGenerations:"+Archipelago.getgen()+"\nBest Phenotype:"+Archipelago.getBestPhenotypeEnum().fitness();
             for(int i=0;i<ArSet.IslandPop;i++){
                 output=output+"\nIsland "+i+":"+"\nSelector:"+settings[i].selector.toString()+" Population:"+settings[i].population+" "+engine[i].alterer().toString()
                         +"\nMutation Probability:"+(int)settings[i].mutationprobability+" Crossover probability:"+(int)settings[i].crossoverprobability+" Crossover Point:"+settings[i].crossoverpoint;
             }
             gngphr.Writeln(output);
-            stats.Writeln(cycle,island.getgen(),island.getBestPhenotypeEnum().fitness());
+            stats.Writeln(cycle,Archipelago.getgen(),Archipelago.getBestPhenotypeEnum().fitness()-minPathLength);
         }while(limit.getMaxCycles()>cycle);
         
         gngphr.finish();
@@ -171,7 +186,7 @@ public class TSPIsland implements Problem<ISeq<double[]>,EnumGene<double[]>,Doub
     }
     private static void update(final EvolutionResult<EnumGene<double[]>,Double> result){
         if((result.totalGenerations())%limits.getCGD()<1 | result.totalGenerations()==1){
-            gngphr.PooldumpEnum(result,"Cycle:"+cycle+",Gen:"+result.totalGenerations()+",Island:"+(island.getIslandInc()+1)+",");
+            gngphr.PooldumpEnum(result,"Cycle:"+cycle+",Gen:"+result.totalGenerations()+",Island:"+(Archipelago.getIslandInc()+1)+",");
         }
     }
     public static void Results(GenLimits limit,ArchipelagoSettings ArSet){

@@ -8,6 +8,15 @@ import javax.swing.*;
 public class Genistics {
     private static final File GFolder = new File(new JFileChooser().getFileSystemView().getDefaultDirectory().toString()+"\\Genistics");
     public static void main(String[] args) {
+        
+        //removed because different concurrency setting dont offer performance difference
+        /*System.setProperty("io.jenetics.concurrency.splitThreshold", "6");
+        System.setProperty("io.jenetics.concurrency.maxSurplusQueuedTaskCount", "6");
+        System.setProperty("io.jenetics.concurrency.maxBatchSize", "10");
+        System.out.println(System.getProperty("io.jenetics.concurrency.splitThreshold"));
+        System.out.println(System.getProperty("io.jenetics.concurrency.maxSurplusQueuedTaskCount"));
+        System.out.println(System.getProperty("io.jenetics.concurrency.maxBatchSize"));*/
+        
         /**
          * Creates a new MainMenu window and configures it to be maximized and visible.
          */

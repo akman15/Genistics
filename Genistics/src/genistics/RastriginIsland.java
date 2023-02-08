@@ -12,6 +12,7 @@ import io.jenetics.engine.EvolutionResult;
 import static io.jenetics.engine.EvolutionResult.toBestEvolutionResult;
 import io.jenetics.engine.EvolutionStatistics;
 import io.jenetics.engine.InvertibleCodec;
+import io.jenetics.engine.Limits;
 import io.jenetics.util.DoubleRange;
 import java.awt.GridLayout;
 import java.io.File;
@@ -36,7 +37,7 @@ public class RastriginIsland {
     static StatGrapher stats;
     private static double bestphenotype=Double.MAX_VALUE;
     static EvolutionResult<DoubleGene, Double> Island;
-    static Archipelago island;
+    static Archipelago Archipelago;
     static GenLimits limits;
     private static Simsettings[] settings;
     private static int cycle;
@@ -62,7 +63,17 @@ public class RastriginIsland {
         limits=limit;
         cycle=0;
         
-        filename="rastrigin_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationProb*100)+"-";
+        String type="";
+        switch(ArSet.migrationtype){
+            case 0:
+                type="RtA";
+                break;
+            case 1:
+                type="RtR";
+                break;
+        }
+        
+        filename="rastrigin_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationInterval)+"_"+type+"-";
         Engine<DoubleGene, Double>[] engine=new Engine[ArSet.IslandPop];
         for(int i=0;i<ArSet.IslandPop;i++){ //create different engine object with different setting each according to each islands settings.
             if(settings[i].crossoverpoint==3){//sets number of crossover point
@@ -107,26 +118,28 @@ public class RastriginIsland {
         */
         String output;
         do{
-            island=new Archipelago(ArSet,limit,gngphr);
+            Archipelago=new Archipelago(ArSet,limit,gngphr);
             limit.setRepGen(0);
             cycle++;
             do{
-                Island=engine[island.getIslandInc()].stream(island.LoadDouble(),island.getgen()).limit(1).peek(statistics).peek(RastriginIsland::update).collect(toBestEvolutionResult());
-                island.SaveDouble(Island);
+                Island=engine[Archipelago.getIslandInc()].stream(Archipelago.LoadDouble(),Archipelago.getgen()).limit(Limits.byFixedGeneration(1)).peek(statistics).peek(RastriginIsland::update).collect(toBestEvolutionResult());
+                Archipelago.SetGen(Island.generation()+1);
+                Archipelago.SaveDouble(Island);
+                Archipelago.IncrementI();
                 //System.out.println(finalbest.population().toString());
-            }while(!island.limit());
-            if(island.getBestPhenotypeDouble().fitness()<bestphenotype){
-                bestphenotype=island.getBestPhenotypeDouble().fitness();
+            }while(!Archipelago.limit()&& (Archipelago.getBestPhenotypeDouble().fitness()>0.01));
+            if(Archipelago.getBestPhenotypeDouble().fitness()<bestphenotype){
+                bestphenotype=Archipelago.getBestPhenotypeDouble().fitness();
             }
             output="Limits: Min="+limit.getMinGens()
                     +" Max="+limit.getMaxGens()+" Reps="+limit.getMaxReps()+" Data collecting interval:"+limit.getCGD()+" Cycles:"+limit.getMaxCycles()
-                    +"\nGenerations:"+island.getgen()+"\nBest Phenotype:"+island.getBestPhenotypeDouble().fitness();
+                    +"\nGenerations:"+Archipelago.getgen()+"\nBest Phenotype:"+Archipelago.getBestPhenotypeDouble().fitness();
             for(int i=0;i<ArSet.IslandPop;i++){
                 output=output+"\nIsland "+i+":"+"\nSelector:"+settings[i].selector.toString()+" Population:"+settings[i].population+" "+engine[i].alterer().toString()
                         +"\nMutation Probability:"+(int)settings[i].mutationprobability+" Crossover probability:"+(int)settings[i].crossoverprobability+" Crossover Point:"+settings[i].crossoverpoint;
             }
             gngphr.Writeln(output);
-            stats.Writeln(cycle,island.getgen(),island.getBestPhenotypeDouble().fitness());
+            stats.Writeln(cycle,Archipelago.getgen(),Archipelago.getBestPhenotypeDouble().fitness());
         }while(limit.getMaxCycles()>cycle);
         
         gngphr.finish();
@@ -146,8 +159,9 @@ public class RastriginIsland {
         return (output);
     }
     private static void update(final EvolutionResult<DoubleGene, Double> result){
+        Archipelago.IncrementGen();
         if((result.totalGenerations())%limits.getCGD()<1 | result.totalGenerations()==1){
-            gngphr.PooldumpDouble(result,"Cycle:"+cycle+",Gen:"+result.totalGenerations()+",Island:"+(island.getIslandInc()+1)+",");
+            gngphr.PooldumpDouble(result,"Cycle:"+cycle+",Gen:"+result.totalGenerations()+",Island:"+(Archipelago.getIslandInc()+1)+",");
         }
     }
     public static void Results(GenLimits limit,ArchipelagoSettings ArSet,int TF) {

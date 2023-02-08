@@ -30,9 +30,13 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         IslandPopSpinner = new javax.swing.JSpinner();
-        MigrationSpinner = new javax.swing.JSpinner();
+        MigrationIntervalSpinner = new javax.swing.JSpinner();
         TFComboBox = new javax.swing.JComboBox<>();
         BatchButton = new javax.swing.JButton();
+        CBToM = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        MigrationRateSpinner = new javax.swing.JSpinner();
+        jLabel2 = new javax.swing.JLabel();
         LimitsPanel = new javax.swing.JPanel();
         MaxReps = new javax.swing.JSpinner();
         MaxGens = new javax.swing.JSpinner();
@@ -76,15 +80,15 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel6.setText("Island Population");
 
-        jLabel7.setText("Migration Chance %");
+        jLabel7.setText("Migration Interval");
 
         IslandPopSpinner.setModel(new javax.swing.SpinnerNumberModel(2, 1, 10, 1));
         IslandPopSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         IslandPopSpinner.setName(""); // NOI18N
 
-        MigrationSpinner.setModel(new javax.swing.SpinnerNumberModel(1, 0, 100, 1));
-        MigrationSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        MigrationSpinner.setName(""); // NOI18N
+        MigrationIntervalSpinner.setModel(new javax.swing.SpinnerNumberModel(100, 1, null, 1));
+        MigrationIntervalSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MigrationIntervalSpinner.setName(""); // NOI18N
 
         TFComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rastrigin", "Rosenbrock", "TSP" }));
 
@@ -95,6 +99,17 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
+        CBToM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Random to all", "Random to random", "Round Robin" }));
+        CBToM.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        jLabel1.setText("Type of Migration");
+
+        MigrationRateSpinner.setModel(new javax.swing.SpinnerNumberModel(2, 1, 5, 1));
+        MigrationRateSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        MigrationRateSpinner.setName(""); // NOI18N
+
+        jLabel2.setText("Migration Rate");
+
         javax.swing.GroupLayout ArchipelagoLayout = new javax.swing.GroupLayout(Archipelago);
         Archipelago.setLayout(ArchipelagoLayout);
         ArchipelagoLayout.setHorizontalGroup(
@@ -103,20 +118,30 @@ public class MainMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ArchipelagoLayout.createSequentialGroup()
-                        .addComponent(TFComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 609, Short.MAX_VALUE)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(IslandPopSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ArchipelagoLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(ArchipelagoRun, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(BatchButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ArchipelagoLayout.createSequentialGroup()
+                        .addComponent(TFComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 353, Short.MAX_VALUE)
+                        .addGroup(ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ArchipelagoLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(MigrationRateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(MigrationSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(BatchButton, javax.swing.GroupLayout.Alignment.TRAILING))))
+                                .addComponent(MigrationIntervalSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ArchipelagoLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(CBToM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(IslandPopSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         ArchipelagoLayout.setVerticalGroup(
@@ -126,11 +151,15 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(IslandPopSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TFComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(TFComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBToM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(ArchipelagoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(MigrationSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(MigrationIntervalSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(MigrationRateSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
                 .addGap(34, 34, 34)
                 .addComponent(ArchipelagoRun)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,11 +169,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         jSplitPane2.setTopComponent(Archipelago);
 
-        MaxReps.setModel(new javax.swing.SpinnerNumberModel(500, 0, 1000, 1));
+        MaxReps.setModel(new javax.swing.SpinnerNumberModel(5000, 0, 100000, 1));
         MaxReps.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MaxReps.setName(""); // NOI18N
 
-        MaxGens.setModel(new javax.swing.SpinnerNumberModel(100000, 1, 1000000, 1));
+        MaxGens.setModel(new javax.swing.SpinnerNumberModel(5000, 1, 1000000, 1));
         MaxGens.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MaxGens.setName(""); // NOI18N
         MaxGens.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -153,7 +182,7 @@ public class MainMenu extends javax.swing.JFrame {
             }
         });
 
-        MinGens.setModel(new javax.swing.SpinnerNumberModel(1000, 0, 100000, 1));
+        MinGens.setModel(new javax.swing.SpinnerNumberModel(0, 0, 100000, 1));
         MinGens.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MinGens.setName(""); // NOI18N
         MinGens.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -267,8 +296,9 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_ExitItemActionPerformed
 
     private void ArchipelagoRunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ArchipelagoRunActionPerformed
-        double d=(int)MigrationSpinner.getValue();
-        ArchipelagoSettings ArSet=new ArchipelagoSettings((int)IslandPopSpinner.getValue(), d/100.0);
+        int MInterval=(int)MigrationIntervalSpinner.getValue();
+        int MRate=(int)MigrationRateSpinner.getValue();
+        ArchipelagoSettings ArSet=new ArchipelagoSettings((int)IslandPopSpinner.getValue(), MInterval,CBToM.getSelectedIndex(),MRate);
         GenLimits limit=new GenLimits((int)MaxGens.getValue(), (int)MinGens.getValue(), (int)MaxReps.getValue(),(int)CGDspinner.getValue(),(int)MaxTasksSpinner.getValue());
         ResultsWindow w=new ResultsWindow();
         w.Results(limit, ArSet,TFComboBox.getSelectedIndex());
@@ -302,8 +332,8 @@ public class MainMenu extends javax.swing.JFrame {
         double MR[] = {1,20,40};//Mutation rates for testing
         double CProb[] = {10,40,80};//Crossover probability for testing
         int CPoint[] = {1,2,3};//Crossover points for testing.3 means n/2 crossover points
-        
-        
+        int Pops[] = {100,200};
+        int Types[] = {0,1};
         
         JDialog d = new JDialog();//create new dialog window to display loading
         d.setAlwaysOnTop(true);
@@ -321,35 +351,38 @@ public class MainMenu extends javax.swing.JFrame {
         d.setVisible(true);
         
         comptasks=0;
-        tasks=sel.length*MR.length*CProb.length;//calculate the number of tasks to complete the batch
+        tasks=Pops.length*sel.length*MR.length*CProb.length;//calculate the number of tasks to complete the batch
         if(TFComboBox.getSelectedIndex()!=2){
             tasks= tasks*CPoint.length;
         }
 
         Thread mainThread= new Thread(() -> {
-            for (Selectors s: sel){
-                for (double cprob: CProb){
-                    for (int cpoints: CPoint){
-                        if(!(TFComboBox.getSelectedIndex()==2 && cpoints!=1)){
-                            for (double mr: MR){
-                                    ArchipelagoSettings ArSet=new ArchipelagoSettings(1,0);
-                                    GenLimits limit=new GenLimits(100000, 1000, 500,100,20);
-                                    Simsettings set=new Simsettings(s, 200, mr, cprob, cpoints);
-                                    switch(TFComboBox.getSelectedIndex()){
-                                        case 0:
-                                            RastriginIsland.QuickStart(limit, ArSet, set);
-                                            break;
-                                        case 1:
-                                            RosenbrockIsland.QuickStart(limit, ArSet, set);
-                                            break;
-                                        case 2:
-                                            TSPIsland.QuickStart(limit, ArSet, set);
-                                            break;
-                                        default:
-                                            RastriginIsland.QuickStart(limit, ArSet, set);
-                                            break;
-                                    }
-                                comptasks++;
+            for (int pops: Pops){
+                int maxgens=(1000000/pops);
+                for (Selectors s: sel){
+                    for (double cprob: CProb){
+                        for (int cpoints: CPoint){
+                            if(!(TFComboBox.getSelectedIndex()==2 && cpoints!=1)){
+                                for (double mr: MR){
+                                        ArchipelagoSettings ArSet=new ArchipelagoSettings(1,0,1,2);
+                                        GenLimits limit=new GenLimits(maxgens, 0, maxgens,500,20);
+                                        Simsettings set=new Simsettings(s, pops, mr, cprob, cpoints);
+                                        switch(TFComboBox.getSelectedIndex()){
+                                            case 0:
+                                                RastriginIsland.QuickStart(limit, ArSet, set);
+                                                break;
+                                            case 1:
+                                                RosenbrockIsland.QuickStart(limit, ArSet, set);
+                                                break;
+                                            case 2:
+                                                TSPIsland.QuickStart(limit, ArSet, set);
+                                                break;
+                                            default:
+                                                RastriginIsland.QuickStart(limit, ArSet, set);
+                                                break;
+                                        }
+                                    comptasks++;
+                                }
                             }
                         }
                     }
@@ -360,12 +393,12 @@ public class MainMenu extends javax.swing.JFrame {
         
         Thread counterthread = new Thread(() -> {
             String ri[]={"-__","_-_","__-"};//running indicator
-            int index=0;
+            int index=0,strln=ri.length;
             while(mainThread.isAlive()){
                 l.setText("Running"+ri[index]+comptasks+"/"+tasks);
                 d.pack();
                 index++;
-                if(index>=ri.length){
+                if(index>=strln){
                     index=0;
                 }
                 try {
@@ -442,6 +475,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JPanel Archipelago;
     private javax.swing.JButton ArchipelagoRun;
     private javax.swing.JButton BatchButton;
+    private javax.swing.JComboBox<String> CBToM;
     private javax.swing.JSpinner CGDspinner;
     private javax.swing.JMenu EditMenu;
     private javax.swing.JMenuItem ExitItem;
@@ -451,13 +485,16 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JSpinner MaxGens;
     private javax.swing.JSpinner MaxReps;
     private javax.swing.JSpinner MaxTasksSpinner;
-    private javax.swing.JSpinner MigrationSpinner;
+    private javax.swing.JSpinner MigrationIntervalSpinner;
+    private javax.swing.JSpinner MigrationRateSpinner;
     private javax.swing.JSpinner MinGens;
     private javax.swing.JComboBox<String> TFComboBox;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
