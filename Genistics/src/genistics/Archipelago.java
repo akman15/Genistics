@@ -140,7 +140,7 @@ public class Archipelago {//A collection of islands
         if(IslandPop>0 && IslandInc==IslandPop && getgen()>1 && ((int)getgen()%MigrationInterval)==0){
             //Causes a migration event if the island is the last of archipelago,more than 1 islands exist, 
             //the gen more than 1 and the modulo of the current gen and the Migration Rate is 0
-            System.out.print("\nMigration event on generation "+getgen()+" with migration interval "+MigrationInterval);
+            //System.out.print("\nMigration event on generation "+getgen()+" with migration interval "+MigrationInterval);
             MigrationE();
         }
         //System.out.println("population 2:"+pop2.toString());

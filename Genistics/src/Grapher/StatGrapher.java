@@ -4,7 +4,9 @@
  */
 package Grapher;
 
+import genistics.ArchipelagoSettings;
 import genistics.Genistics;
+import genistics.Simsettings;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -22,7 +24,7 @@ public class StatGrapher {
     private ArrayList<Double> phenlist= new ArrayList<>();//saves individual phenotypes in a list
     private boolean initialized=false;
     
-    public StatGrapher(String filename) throws FileNotFoundException{
+    public StatGrapher(String filename,ArchipelagoSettings ArSet,Simsettings[] set,String EvalF) throws FileNotFoundException{
         /**
          * Create a new StatGrapher instance.
          * Checks if a file with the same name exists, if it does it increments the filename.
@@ -35,16 +37,27 @@ public class StatGrapher {
             file= new File(Genistics.GetGFolder().toString()+"\\"+filename+"("+i+")stats.csv");
             i++;
         }
+        String type="";
+        switch(ArSet.migrationtype){
+            case 0:
+                type="RtA";
+                break;
+            case 1:
+                type="RtR";
+                break;
+            case 2:
+                type="RR";
+                break;
+        }
         writer = new PrintWriter(file);
-        String temp1[]=filename.split("-");
-        String temp2[]=temp1[0].split("_");
-        writer.println("Test function:"+temp2[0]+",Island Population:"+temp2[2]+
-        ",Migration Rate:"+temp2[3]+",Migration Type:"+temp2[4]);
-        for(i=1;i<temp1.length;i++){
-            temp2=temp1[i].split("_");
-            writer.println("Island:"+i+",Population:"+temp2[0]+",Mutation rate:"+temp2[1]+
-            ",Crossover Propability:"+temp2[2]+",Crossover Points:"+temp2[3]+
-            ",Selector:"+temp2[4]);
+        writer.println("Test function:"+EvalF+",Island Population:"+ArSet.IslandPop+
+        ",Migration Rate:"+ArSet.MigrationRate+",Migration Type:"+type+",Migration Interval:"+ArSet.MigrationInterval);
+        for(Simsettings setting:set){
+            i=1;
+            writer.println("Island:"+i+",Population:"+setting.population+",Mutation rate:"+setting.mutationprobability+
+            ",Crossover Propability:"+setting.crossoverprobability+",Crossover Points:"+setting.crossoverpoint+
+            ",Selector:"+setting.selector.toString());
+            i++;
         }
     }
     public void finish(){

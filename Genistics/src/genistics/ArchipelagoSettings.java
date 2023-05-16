@@ -10,10 +10,10 @@ package genistics;
  * @author Akman
  */
 public class ArchipelagoSettings {
-    int IslandPop=1;
-    int MigrationInterval=0;
-    int migrationtype=0;
-    int MigrationRate=1;
+    public int IslandPop=1;
+    public int MigrationInterval=0;
+    public int migrationtype=0;
+    public int MigrationRate=1;
     ArchipelagoSettings(int IslandPop,int MigrationInterval,int migrationtype,int MigrationRate){
         this.IslandPop=IslandPop;
         this.MigrationInterval=MigrationInterval;

@@ -77,7 +77,7 @@ public class RosenbrockIsland {
                 break;
         }
         
-        filename="rosenbrock_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationInterval)+"_"+type+"-";
+        filename="rosenbrock_island_"+ArSet.IslandPop+"_"+(int)(ArSet.MigrationInterval)+"_"+(int)(ArSet.MigrationRate)+"_"+type+"-";
         Engine<DoubleGene, Double>[] engine=new Engine[ArSet.IslandPop];
         for(int i=0;i<ArSet.IslandPop;i++){ //create different engine object with different setting each according to each islands settings.
             if(settings[i].crossoverpoint==3){//sets number of crossover point
@@ -111,7 +111,7 @@ public class RosenbrockIsland {
             Logger.getLogger(RosenbrockIsland.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {//create StatGrapher object
-            stats = new StatGrapher(filename);
+            stats = new StatGrapher(filename,ArSet,settings,"Rosenbrock");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(RosenbrockIsland.class.getName()).log(Level.SEVERE, null, ex);
         }

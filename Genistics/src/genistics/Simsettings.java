@@ -9,11 +9,11 @@ package genistics;
  * @author Akman
  */
 public class Simsettings {//Engine settings template for islands
-    Selectors selector;
-    int population;
-    double mutationprobability;
-    double crossoverprobability;
-    int crossoverpoint;
+    public Selectors selector;
+    public int population;
+    public double mutationprobability;
+    public double crossoverprobability;
+    public int crossoverpoint;
     Simsettings(Selectors selector,int population,double mutationprobability,double crossoverprobability,int crossoverpoint){
         this.selector=selector;
         this.population=population;

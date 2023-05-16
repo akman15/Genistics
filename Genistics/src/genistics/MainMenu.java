@@ -82,11 +82,11 @@ public class MainMenu extends javax.swing.JFrame {
 
         jLabel7.setText("Migration Interval");
 
-        IslandPopSpinner.setModel(new javax.swing.SpinnerNumberModel(2, 1, 10, 1));
+        IslandPopSpinner.setModel(new javax.swing.SpinnerNumberModel(4, 1, 10, 1));
         IslandPopSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         IslandPopSpinner.setName(""); // NOI18N
 
-        MigrationIntervalSpinner.setModel(new javax.swing.SpinnerNumberModel(100, 1, null, 1));
+        MigrationIntervalSpinner.setModel(new javax.swing.SpinnerNumberModel(10, 1, null, 1));
         MigrationIntervalSpinner.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         MigrationIntervalSpinner.setName(""); // NOI18N
 
@@ -332,7 +332,7 @@ public class MainMenu extends javax.swing.JFrame {
         double MR[] = {1,20,40};//Mutation rates for testing
         double CProb[] = {10,40,80};//Crossover probability for testing
         int CPoint[] = {1,2,3};//Crossover points for testing.3 means n/2 crossover points
-        int Pops[] = {100,200};
+        int Pops[] = {200};
         int Types[] = {0,1};
         
         JDialog d = new JDialog();//create new dialog window to display loading
@@ -366,19 +366,23 @@ public class MainMenu extends javax.swing.JFrame {
                                 for (double mr: MR){
                                         ArchipelagoSettings ArSet=new ArchipelagoSettings(1,0,1,2);
                                         GenLimits limit=new GenLimits(maxgens, 0, maxgens,500,20);
-                                        Simsettings set=new Simsettings(s, pops, mr, cprob, cpoints);
+                                        Simsettings settings=new Simsettings(s, pops, mr, cprob, cpoints);
                                         switch(TFComboBox.getSelectedIndex()){
                                             case 0:
-                                                RastriginIsland.QuickStart(limit, ArSet, set);
+                                                RastriginIsland isl1 = new RastriginIsland();
+                                                isl1.QuickStart(limit,ArSet,settings);
                                                 break;
                                             case 1:
-                                                RosenbrockIsland.QuickStart(limit, ArSet, set);
+                                                RosenbrockIsland isl2 = new RosenbrockIsland();
+                                                isl2.QuickStart(limit,ArSet,settings);
                                                 break;
                                             case 2:
-                                                TSPIsland.QuickStart(limit, ArSet, set);
+                                                TSPIsland isl3 = new TSPIsland();
+                                                isl3.QuickStart(limit,ArSet,settings);
                                                 break;
                                             default:
-                                                RastriginIsland.QuickStart(limit, ArSet, set);
+                                                RastriginIsland islD = new RastriginIsland();
+                                                islD.QuickStart(limit,ArSet,settings);
                                                 break;
                                         }
                                     comptasks++;

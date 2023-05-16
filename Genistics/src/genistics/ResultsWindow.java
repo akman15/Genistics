@@ -34,8 +34,10 @@ public class ResultsWindow {
         for(int i=0;i<ArSet.IslandPop;i++){
             IslandMenu dialog = new IslandMenu(f,true);
             settings[i]=dialog.showDialog();
-        }  
-        
+            if(settings[i]==null){
+                return;
+            }
+        } 
         JDialog d = new JDialog();//create new dialog window to display loading
         d.setAlwaysOnTop(true);
         d.setResizable(false);
@@ -54,16 +56,20 @@ public class ResultsWindow {
         Thread mainThread = new Thread(() -> {
             switch(TF){
                 case 0:
-                    l.setText(RastriginIsland.Start(limit,ArSet,settings));
+                    RastriginIsland isl1 = new RastriginIsland();
+                    l.setText(isl1.Start(limit,ArSet,settings));
                     break;
                 case 1:
-                    l.setText(RosenbrockIsland.Start(limit,ArSet,settings));
+                    RosenbrockIsland isl2 = new RosenbrockIsland();
+                    l.setText(isl2.Start(limit,ArSet,settings));
                     break;
                 case 2:
-                    l.setText(TSPIsland.Start(limit,ArSet,settings));
+                    TSPIsland isl3 = new TSPIsland();
+                    l.setText(isl3.Start(limit,ArSet,settings));
                     break;
                 default:
-                    l.setText(RastriginIsland.Start(limit,ArSet,settings));
+                    RastriginIsland islD = new RastriginIsland();
+                    l.setText(islD.Start(limit,ArSet,settings));
                     break;
             }
             f.pack();
